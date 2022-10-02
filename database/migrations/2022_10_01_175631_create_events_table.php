@@ -28,7 +28,8 @@ class CreateEventsTable extends Migration
             $table->string('title');
             $table->text('body');
             $table->string('start');
-            $table->string('end');
+            // 設定の時間が足りないので、nullableで空白を許容する
+            $table->string('end')->nullable();
             $table->timestamps();
         });
     }

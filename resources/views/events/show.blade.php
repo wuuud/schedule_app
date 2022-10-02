@@ -10,6 +10,7 @@
                     {{ __('Event Start') }}
                 </label>
                 <div class="shadow appearance-none border rounded w-auto py-2 px-3 text-gray-700 leading-tight">
+                {{ $event->start}}
                 </div>
             </div>
             <div class="my-4 text-slate-500 text-lg leading-relaxed">
@@ -17,6 +18,7 @@
                     {{ __('Event End') }}
                 </label>
                 <div class="shadow appearance-none border rounded w-auto py-2 px-3 text-gray-700 leading-tight">
+                {{ $event->end}}
                 </div>
             </div>
             <div class="my-4 text-slate-500 text-lg leading-relaxed">
@@ -24,6 +26,7 @@
                     {{ __('Event Name') }}
                 </label>
                 <div class="shadow appearance-none border rounded w-auto py-2 px-3 text-gray-700 leading-tight">
+                {{ $event->title}}
                 </div>
             </div>
             <div class="my-4 text-slate-500 text-lg leading-relaxed mb-2">
@@ -31,6 +34,7 @@
                     {{ __('Description') }}
                 </label>
                 <p class="shadow appearance-none border rounded w-auto py-2 px-3 text-gray-700 leading-tight">
+                {{ $event->body}}
                 </p>
             </div>
             <div class="flex flex-row text-center my-4">

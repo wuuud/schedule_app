@@ -5,9 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
+    // EventControllerの初期設定を入れる
+    public function __construct()
+    {
+        // アクションに合わせたpolicyのメソッドで
+        // 認可されていないユーザーはエラーを投げる
+        // Eventモデルに紐づいたポリシーを用いて確認してください
+        $this->authorizeResource(Event::class, 'event');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +24,12 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        // 忘れないようにAuthをかく
+        $events =Auth::user()->events;
+        // $start = date('Y-m-d');
+        // $today = now();
+        // $diff = $today->diff($start);
+        return view('events.index')->with(compact('events'));
     }
 
     /**
@@ -23,9 +37,9 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Event $event)
     {
-        //
+        return view('events.create')->with(compact('event'));
     }
 
     /**
@@ -36,7 +50,15 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-        //
+        $event = new Event($request->all());
+
+        $event->user_id = $request->user()->id;
+
+        $event->save();
+
+        return redirect()
+            // ->route('events.show')->with(compact('event'));
+            ->route('events.show', $event);
     }
 
     /**
@@ -47,7 +69,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        return view('events.show')->with(compact('event'));
     }
 
     /**
@@ -58,7 +80,7 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        return view('events.edit')->with(compact('event'));
     }
 
     /**
