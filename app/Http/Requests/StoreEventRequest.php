@@ -13,7 +13,7 @@ class StoreEventRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,5 +26,20 @@ class StoreEventRequest extends FormRequest
         return [
             //
         ];
+    }
+    protected function prepareForValidation()
+    {
+        // start_date', 'start_time用意したデータの構文　２つが揃っていれば
+        $start = ($this->filled(['start_date', 'start_time'])) 
+        //  　　　　　　　　　　両者を結合
+                ? $this->start_date . ' ' . $this->start_time : '';
+        $end = ($this->filled(['end_date', 'end_time'])) 
+                ? $this->end_date . ' ' . $this->end_time : '';
+        $this->merge([
+            // 今作った配列に追加して
+            // 結合したものにバリデーションが効く
+            'start' => $start,
+            'end' => $end,
+        ]);
     }
 }
